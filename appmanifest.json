@@ -1,7 +1,7 @@
 {
-	"name": "Slice Fruit",
-	"short_name": "Slice Fruit",
-	"description": "Cut the Fruits",
+	"name": "Crazy Rich Club",
+	"short_name": "Crazy Rich Club",
+	"description": "Cut the Expensive Stuff",
 	"start_url": "index.html",
 	"display": "fullscreen",
 	"orientation": "landscape",
