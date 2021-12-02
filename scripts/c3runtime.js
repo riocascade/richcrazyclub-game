@@ -4066,6 +4066,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetWidth,
 		C3.Plugins.Sprite.Acts.SetHeight,
 		C3.Plugins.Spritefont2.Cnds.CompareInstanceVar,
+		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.Touch.Cnds.OnTouchObject,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.System.Acts.GoToLayout,
@@ -4078,6 +4079,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Exps.int,
 		C3.Plugins.LocalStorage.Exps.ItemValue,
 		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
+		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.Browser.Acts.Close,
 		C3.Plugins.Audio.Acts.StopAll,
 		C3.Plugins.LocalStorage.Cnds.CompareValue,
@@ -4085,7 +4087,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
 		C3.Plugins.System.Exps.layoutname,
 		C3.Plugins.Browser.Cnds.IsFullscreen,
-		C3.Plugins.Browser.Acts.RequestFullScreen
+		C3.Plugins.Browser.Acts.RequestFullScreen,
+		C3.Plugins.Sprite.Acts.SetPosToObject,
+		C3.Plugins.Touch.Cnds.IsTouchingObject
 	];
 };
 self.C3_JsPropNameTable = [
@@ -4147,7 +4151,21 @@ self.C3_JsPropNameTable = [
 	{ice: 0},
 	{freelance: 0},
 	{GameText: 0},
+	{btn_back: 0},
+	{ArrowNavigation: 0},
+	{btn_play: 0},
+	{difficulty: 0},
+	{no: 0},
+	{Nft_pict: 0},
+	{Nft_select: 0},
+	{p2emode: 0},
+	{baseReward: 0},
+	{playerCrazy: 0},
+	{difficulties: 0},
 	{ice_time: 0},
+	{TIMER_EASY: 0},
+	{TIMER_MEDIUM: 0},
+	{TIMER_HARD: 0},
 	{combo: 0},
 	{timer: 0},
 	{lifes: 0},
@@ -4266,17 +4284,15 @@ self.C3_ExpressionFuncs = [
 		() => "arcade",
 		() => "SliceFruitModeArcade",
 		() => 2,
-		() => "zen",
-		() => "SliceFruitModeZen",
-		() => "frenetic",
-		() => "SliceFruitModeFrenetic",
+		() => 1,
+		() => 90,
+		() => 120,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => v0.GetValue();
 		},
 		() => 0.5,
 		() => 0.1,
-		() => 1,
 		() => 550,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -4293,11 +4309,13 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, 1, 2, 3, 4);
 		},
+		() => "zen",
 		() => 0.3,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(0, 1, 2, 3);
 		},
+		() => "frenetic",
 		() => 4,
 		() => 5,
 		() => -5,
@@ -4394,6 +4412,19 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("SCORE:", v0.GetValue());
 		},
+		() => "reward",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => (v0.GetValue() * v1.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			const v3 = p._GetNode(3).GetVar();
+			return () => and((and((and("EARN:", v0.GetValue()) + " x "), v1.GetValue()) + " = "), (v2.GetValue() * v3.GetValue()));
+		},
 		() => "LOCAL STORAGE",
 		() => "bestscore",
 		p => {
@@ -4410,12 +4441,18 @@ self.C3_ExpressionFuncs = [
 			return () => and("BESTSCORE: ", f0());
 		},
 		() => 500,
+		() => "free2play",
+		() => "play2earn",
 		() => "LSMusic",
 		() => "sound",
 		() => "music_menu",
 		() => "menu",
 		() => "music",
-		() => "game"
+		() => "game",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpInstVar();
+		}
 ];
 
 
